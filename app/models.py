@@ -1,7 +1,10 @@
+from datetime import datetime
+
 from sqlalchemy import Column
+from sqlalchemy import DateTime
+from sqlalchemy import Float
 from sqlalchemy import Integer
 from sqlalchemy import String
-from sqlalchemy import Float
 
 from app.db import Base
 
@@ -17,13 +20,22 @@ class Measurement(Base):
 
     metric = Column(
         String,
-        index=True
+        index=True,
+        nullable=False
     )
 
     value = Column(
-        Float
+        Float,
+        nullable=False
     )
 
     unit = Column(
-        String
+        String,
+        nullable=False
+    )
+
+    timestamp = Column(
+        DateTime,
+        default=datetime.utcnow,
+        nullable=False
     )

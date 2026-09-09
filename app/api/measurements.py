@@ -30,7 +30,9 @@ def create_measurement(
     )
 
     db.add(measurement)
+
     db.commit()
+
     db.refresh(measurement)
 
     return measurement
@@ -44,3 +46,4 @@ def get_measurements(
     return db.query(
         Measurement
     ).all()
+    
