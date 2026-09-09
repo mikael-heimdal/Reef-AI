@@ -3,3 +3,41 @@ services:
     build: .
     ports:
       - "8000:8000"
+cat > docker-compose.yml <<'EOF'
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: reef-ai-api
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - ./app:/app/app
+      - ./reefai.db:/app/reefai.db
+
+    restart: unless-stopped
+
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+    container_name: reef-ai-dashboard
+
+    ports:
+      - "5173:5173"
+
+    volumes:
+      - ./frontend:/frontend
+      - /frontend/node_modules
+
+    depends_on:
+      - api
+
+    restart: unless-stopped
+EOF
